@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                         // Construct the card
                         card.innerHTML = `
-                            <div class="card mb-4">
+                            <div class="card mb-4" data-id="${fruit.id}">
                                 ${carouselHtml}
                                 <div class="card-body">
                                     <h5 class="card-title">${fruit.name}</h5>
@@ -54,6 +54,14 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                         `;
                         container.appendChild(card);
+
+                        const allCards = document.querySelectorAll(".card");
+                            console.log(allCards);
+                            allCards.forEach(function(card){
+                                 card.addEventListener("click", function() {
+                                    window.lastClickedFruit = card.getAttribute("data-id");
+                                 })
+                            });
                     });
 
                     // Initialize all carousels after they are added to the DOM
@@ -67,7 +75,8 @@ document.addEventListener("DOMContentLoaded", function() {
             const FruitButton = document.getElementById("showFruitButton");
 
             FruitButton.addEventListener("click", function() {
-                fetch('/api/fruits/1', {
+                let lastId = window.lastClickedFruit || 1;
+                fetch(`/api/fruits/${lastId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -93,9 +102,12 @@ document.addEventListener("DOMContentLoaded", function() {
                                 </div>
                             </div>
                         `;
+                            
                     });
                 
              });
+
+             
     }
     
 });
