@@ -103,6 +103,9 @@ document.addEventListener("DOMContentLoaded", function() {
                             </div>
                         `;
                             
+                    }).catch(function(error) {
+                       //error Funktion
+
                     });
                 
              });
